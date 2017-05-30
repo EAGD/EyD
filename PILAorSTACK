@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+typedef struct Palabra{
+	int n; //n elementos
+	char a[100];
+}Palabra;
+
+void init(Palabra *palabra){
+	palabra -> n=0;
+}
+
+void push(Palabra *palabra, char letra){   
+	palabra -> a[palabra -> n] = letra;
+	palabra -> n++;
+
+}
+
+char pop(Palabra *palabra){
+
+	char x = palabra -> a[palabra -> n-1];
+
+	palabra -> n--;
+
+	return x;
+}
+
+void main(){
+	int i;
+	char letra;
+	char frase[100];
+	printf("Ingrese su palabra: \n");
+	scanf("%s",frase);
+	Palabra palabra;
+	init(&palabra);
+	int nElems=0;
+	for(i=0;frase[i]!='\0';i++){
+		nElems++;
+	}
+	for(i=0;i<nElems;i++){
+		letra = frase[i];
+		push(&palabra,letra);
+	}
+
+	if(Palindrome(&palabra,frase,nElems)==0){
+		printf("Esta palabra no es palindrome\n");
+	}else{
+		printf("Esta palabra es palindrome\n");	
+	}
+
+	/*for(i=0;i<5;i++){
+		printf("%c\n", palabra.a[i]);
+	}*/
+
+}
+int Palindrome (Palabra *palabra, char frase[], int nElems){
+	int i;
+	char x;
+
+
+	for(i=0;i<nElems;i++){
+		x=pop(palabra);
+
+		if(frase[i] != x) return 0;	
+	}
+	return 1;
+}
